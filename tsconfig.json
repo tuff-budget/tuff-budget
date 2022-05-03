@@ -7,6 +7,6 @@
     "esModuleInterop": true
   },
 
-  "include": ["server/**/*"],
+  "include": ["server/**/*", "client/**/*"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }

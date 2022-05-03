@@ -8,8 +8,8 @@ const lineItemRouter = require('./routes/lineItems');
 const budgetsRouter = require('./routes/budgets');
 
 // CREATE ROUTES
-app.use('/lineItems', lineItemRouter);
-app.use('/budgets', budgetsRouter);
+// app.use('/lineItems', lineItemRouter);
+// app.use('/budgets', budgetsRouter);
 
 // CATCH-ALL ERROR HANDER
 // app.use((req, res) => res.sendStatus(404))
