@@ -1,0 +1,52 @@
+{
+  "name": "tuff-budget",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "dev": "webpack serve",
+    "start": "nodemon ./server/server.ts --watch --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jigglytuff/tuff-budget.git"
+  },
+  "author": "Adam Allison, Judy Song, Chris Cheng, Jake Bradbeer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jigglytuff/tuff-budget/issues"
+  },
+  "homepage": "https://github.com/jigglytuff/tuff-budget#readme",
+  "dependencies": {
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
+    "@babel/preset-react": "^7.16.7",
+    "babel-loader": "^8.2.5",
+    "concurrently": "^7.1.0",
+    "copy-webpack-plugin": "^10.2.4",
+    "cross-env": "^7.0.3",
+    "css-loader": "^6.7.1",
+    "eslint": "^8.14.0",
+    "eslint-plugin-css-modules": "^2.11.0",
+    "eslint-plugin-react": "^7.29.4",
+    "express": "^4.18.1",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "nodemon": "^2.0.16",
+    "sass": "^1.51.0",
+    "sass-loader": "^12.6.0",
+    "style-loader": "^3.3.1",
+    "ts-loader": "^9.3.0",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.4",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.8.1"
+  }
+}
