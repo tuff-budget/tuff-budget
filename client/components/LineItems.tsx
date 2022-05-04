@@ -19,8 +19,8 @@ const LineItems: React.FC<LineItemProps> = props => {
       <div>Expected Amount: {expAmount}</div>
       <div>Spent: {actAmount}</div>
       <div>Category: {category}</div>
-      <div >Is Fixed? {isFixed}</div>
-      <div >Is Recurring? {isRecurring}</div>
+      <div>Is Fixed? {isFixed}</div>
+      <div>Is Recurring? {isRecurring}</div>
       <button  onClick={() => handleDeleteLineItem(lineItemID, budgetID)}>X</button>
     </div>
   )
