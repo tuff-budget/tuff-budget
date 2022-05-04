@@ -1,50 +1,144 @@
-// body {
-//   background-color: rgb(243, 240, 243);
-// }
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&family=M+PLUS+Rounded+1c&family=PT+Sans&display=swap');
+
+body {
+  background-color: rgb(252, 247, 252);
+  font-family: 'Josefin', sans-serif;
+}
+
+
 $primary-color: rgb(176, 255, 176);
-$secondary-color: rgb(201,255,231); 
+$secondary-color: rgb(201,255,231);
+$third-color: rgb(23, 110, 79);
 
 @mixin flexVertContainers {
   display: flex;
   flex-direction: column;
-  border: solid 2px black;
+  padding: 20px;
+  // border: solid 5px white;
 }
 
 @mixin flexHorizContainers {
   display: flex;
   flex-direction: row;
   align-items: center;
-  border: solid 2px pink;
+  padding: 5px;
+  // border: solid 2px pink;
+}
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+.heading{
+  color: $third-color; 
+  display: flex; 
+  flex-direction: row;
+  justify-content: center; 
 }
 
 .budget-list-container {
   @include flexVertContainers;
-  background: lighten($secondary-color, 5%);
+  background: white;
 }
 
 .line-item {
   @include flexHorizContainers;
-  width: 100%;
-  justify-content: space-evenly;
-}
+  @include border-radius(5px);
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 
+  .delete-button {
+    @include flexHorizContainers;
+    justify-content: flex-end;
+
+    button{
+      @include border-radius(5px);
+      background-color: $secondary-color;
+      padding: 2px 8px 2px 8px;
+    }
+  }
+}
 
 .budget-card{
   @include flexVertContainers;
+  @include border-radius(20px);
+  margin-top: 10px;
+  border: solid 2px rgb(21, 57, 18);
+  background: lighten($secondary-color, 5%);
+  min-height: 500px;
 }
 
 .line-item-container{
   @include flexVertContainers;
+  @include border-radius(5px);
+  .line-item-header {
+    position: relative;
+    top: 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    
+  }
 }
 
 .add-line-item-form{
-  @include flexHorizContainers;
+  float: bottom;
+    form {
+      @include flexHorizContainers;
+      @include border-radius(5px);
+      justify-content: flex-start;
+      align-items: center;
+      input {
+        @include border-radius(5px);
+        border: solid 1px $third-color;
+        margin-right: 10px;
+        padding: 5px;
+      }
+    }
 }
 
 .create-budget-form{
   @include flexHorizContainers;
+  // @include border-radius(5px);
+  margin-top: 15px; 
+  justify-content: center; 
+  
 }
 
 .budget-list-container{
   @include flexVertContainers;
+  @include border-radius(5px);
 }
+
+h2{
+  color: rgb(23, 110, 79); 
+}
+
+h4{
+  color: darken(rgb(46, 121, 95), 10%); 
+}
+
+.delete-budget-button{
+  display: flex; 
+  flex-direction: row;
+  justify-content: end; 
+  border-radius: 12px; 
+  margin-top: 9px;
+  margin-right: 9px;
+}
+
+// .name-of-project{
+//   // display: flex; 
+//   // flex-direction: row;
+//   width: 90%
+  
+// }
+
+// .budget-amount{
+//   display: flex; 
+//   flex-direction: row;
+// }

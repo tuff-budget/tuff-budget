@@ -5,7 +5,10 @@ import './style.scss';
 const App = () => {
   
 return (
-    <MainContainer />
+    <div>
+        <h1 className = 'heading'>Tuff Budget</h1>
+        <MainContainer />
+    </div>
 )
 }
 

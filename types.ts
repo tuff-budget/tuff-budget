@@ -17,7 +17,6 @@ export type LineItem = {
   actAmount: number,
   isFixed: boolean,
   isRecurring: boolean,
-
 }
 
 export type LineItemResponse = {
@@ -52,3 +51,19 @@ export type LineItemPostRequest = {
 }
 
 export type HandleFunctions = () => void
+
+export interface NextFunction {
+  (err?: any): void;
+}
+
+export interface RequestHandler {
+(req: Request, res: Response, next: NextFunction): any;
+}
+
+// export interface ErrorRequestHandler {
+//   (err: any, req: Request, res: Response, next: NextFunction): any;
+// }
+
+export interface MiddlewareFunction {
+  (req: Request, res: Response, next: NextFunction): void;
+}
