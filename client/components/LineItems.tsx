@@ -15,13 +15,13 @@ const LineItems: React.FC<LineItemProps> = props => {
   
   return (
     <div className='line-item'>
-      <div>{description}</div>
-      <div>{expAmount}</div>
-      <div>{actAmount}</div>
-      <div>{category}</div>
-      <div>{isFixed}</div>
-      <div>{isRecurring}</div>
-      <button onClick={() => handleDeleteLineItem(lineItemID, budgetID)}>X</button>
+      <div>Description: {description}</div>
+      <div>Expected Amount: {expAmount}</div>
+      <div>Spent: {actAmount}</div>
+      <div>Category: {category}</div>
+      <div >Is Fixed? {isFixed}</div>
+      <div >Is Recurring? {isRecurring}</div>
+      <button  onClick={() => handleDeleteLineItem(lineItemID, budgetID)}>X</button>
     </div>
   )
 }

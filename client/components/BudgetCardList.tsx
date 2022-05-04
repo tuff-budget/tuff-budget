@@ -15,7 +15,7 @@ const BudgetCardList: React.FC<BudgetCardListProps> = props => {
   const { budgetArray, userID, handleDeleteBudget, createBudget, handleDeleteLineItem, createLineItem } = props;
 
   return (
-    <div>
+    <div className='budget-list-container'>
       {budgetArray.map((budget, i) => <BudgetCard
          key={budget.budgetID} 
          createBudget={createBudget} 

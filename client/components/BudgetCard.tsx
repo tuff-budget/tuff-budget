@@ -30,12 +30,13 @@ const { lineItems, title, budget, budgetID } = budgetObject;
   })
   //iterate through the open and create a new line per object
   return (
-    <div>
+    <div className='budget-card'>
       {/* add budget title followed by budget name. Prop drill from parent? */}
       <h1>{title}</h1>
-      <div> {budget} </div>
+      <h3>${budget}</h3>
       {/* add budget value. Prop drill from above? */}
-      <div>{lineItemArray}</div>
+      <div className='line-item-container'>{lineItemArray}</div>
+      <div className='add-line-item-form'>
       <form onSubmit = {(e) => createLineItem(e, budgetID)}>
           <input placeholder = 'description'></input>
           <input placeholder = 'category'></input>
@@ -46,6 +47,7 @@ const { lineItems, title, budget, budgetID } = budgetObject;
           <input placeholder = 'isRecurring'></input>
           <button>Submit</button>
       </form>
+      </div>
     </div>
 
    )
