@@ -158,6 +158,15 @@ h4{
  
 }
 
+.budget-meta-totals{
+  display: flex; 
+  flex-direction: row;
+  justify-content: start;
+  > * {
+    padding-right: 100px;
+  }
+}
+
 // .name-of-project{
 //   // display: flex; 
 //   // flex-direction: row;

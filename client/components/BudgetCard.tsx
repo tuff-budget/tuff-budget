@@ -29,19 +29,25 @@ lineItems.map(lineItem => {
   />)
 });
 
-// create a function getExpectedRemainder
-// const getExpectedRemainder (): number () => {
-//   let sum = 0;
-//   for (let i = 0; i < lineItemArray; i++){
-    
-//   }
+// calculate the total amount budgeted
+const getExpectedTotal = () => {
+  let sum = 0;
+  lineItems.forEach((li:LineItem) => sum += li.expAmount);
+  return sum;
+}
 
-// }
-  // create sum variable set to zero
-  // iterate  over every lineitem
-    // add the spent amount to the sum
-  // return sum
+// calculate the total amount spent
+const getActualTotal = () => {
+  let sum = 0;
+  lineItems.forEach((li:LineItem) => {
+    // only include actual if it is a spent amount (> 1)
+    if (li.actAmount >= 0) sum += li.actAmount;
+  });
+  return sum;
+}
 
+const expectedTotal = getExpectedTotal();
+const actualTotal = getActualTotal();
 
 //iterate through the open and create a new line per object
 return (
@@ -50,17 +56,22 @@ return (
     <div className = 'delete-budget-button'>
       <button onClick = {(e) => handleDeleteBudget(budgetID)}>X</button>
     </div>
-
     {/* BUDGET META DATA */}
     <div className='budget-meta-data'>
       <h2>{title}</h2>
       <h4>Budget: {'$'.concat(budget.toLocaleString())}</h4>
-      
-      {/* <h4>Current Total (Expected): {'$'.concat(budget.toLocaleString())}</h4>
-      <h4>Remaining Budget (Expected): {'$'.concat((budget - budget).toLocaleString())}</h4> */}
-{/* 
-      <h4>Current Total (Expected): {'$'.concat(budget.toLocaleString())}</h4>
-      <h4>Remaining Budget (Expected): {'$'.concat((budget - budget).toLocaleString())}</h4> */}
+      <div className='budget-meta-totals'>
+        <div className='budget-meta-expected'>
+          <p>Expected:</p>
+          <p>Current Total: {'$'.concat(expectedTotal.toLocaleString())}</p>
+          <p>Remaining Budget: {'$'.concat((budget - expectedTotal).toLocaleString())}</p>
+        </div>
+        <div className='budget-meta-actual'>
+          <p>Actual:</p>
+          <p>Current Total (Actual): {'$'.concat(actualTotal.toLocaleString())}</p>
+          <p>Remaining Budget (Actual): {'$'.concat((budget - actualTotal).toLocaleString())}</p>
+        </div>
+      </div>
     </div>
 
     {/* LINE ITEM DATA */}
