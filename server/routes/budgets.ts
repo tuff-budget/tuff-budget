@@ -6,12 +6,8 @@ import { Request, Response } from 'express';
 const budgetsController = require('../controllers/budgetsController');
 
 // REQUEST HANDLERS
-router.get(
-  '/',
-  budgetsController.getBudgets,
-  budgetsController.getLineItems,
-  function (req: Request, res: Response) {
-    res.send('POST request to the homepage');
+router.get('/:userID', budgetsController.getBudgets, budgetsController.getLineItems, function (req: Request, res: Response) {
+    res.status(200).json(res.locals.userBudgets);
   }
 );
 

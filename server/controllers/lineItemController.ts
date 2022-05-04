@@ -1,14 +1,36 @@
 export {};
 
-import { NextFunction } from '../types';
+import { NextFunction } from '../../types';
 import { Request, Response } from 'express';
 const db = require('../models/dbModels');
 
 const lineItemController = {
-  // middleware to edit an existing line item in the database
-//   modifyLineItem: (req: Request, res: Response, next: NextFunction) => {
+  // middleware to delete an existing line item in the database
+  deleteLineItem: (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
 
-//   },
+    // define query to delete specified budget
+    const sqlQuery = `
+    UPDATE lineitems
+    SET isActive = false
+    WHERE ID = $1;
+    `;
+
+    // query the database and insert new budget
+    db.query(sqlQuery, [id])
+      .then((queryResults: any) => {
+        return next();
+      })
+      .catch((err: any) => {
+        return next({
+          log: 'Express error in deleteLineItem middleware',
+          status: 400,
+          message: {
+            err: `lineItemController.deleteLineItem: ERROR: ${err}`,
+          },
+        });
+      });
+  },
 
   // middleware to enter a new line item into a database
   createLineItem: (req: Request, res: Response, next: NextFunction) => {

@@ -1,6 +1,6 @@
 export {};
 
-import { NextFunction, LineItem } from '../types';
+import { LineItem, NextFunction } from '../../types';
 import { Request, Response } from 'express';
 const db = require('../models/dbModels');
 
@@ -22,14 +22,14 @@ interface BudgetQueryType {
 const budgetsController = {
   // middleware to recieve all budgets for a specified user
   getBudgets: (req: Request, res: Response, next: NextFunction) => {
-    const userID = 1; // jakes userID FIXME: change hardcoded userID to userID from login
+    const { userID } = req.params;
     const params = [userID];
 
     // define query to recieve all budgets for the specified user
     const sqlQuery = `
     SELECT * 
     FROM budgets
-    WHERE userID = $1;
+    WHERE userID = $1 AND isActive = true;
     `;
 
     // query the database and pass the results to the next middleware
@@ -61,41 +61,49 @@ const budgetsController = {
       });
   },
 
-  getLineItems: (req: Request, res: Response, next: NextFunction) => {
-    res.locals.userBudgets.forEach((budget: UserBudgetType) => {
+  getLineItems: async (req: Request, res: Response, next: NextFunction) => {
+    for (let budget of res.locals.userBudgets){
       const sqlQuery = `
       SELECT * 
       FROM lineitems
-      WHERE budgetID = $1;
+      WHERE budgetID = $1 AND isActive = true;
       `;
 
       const params = [budget.budgetID];
-
+      
       // query database for all line items pertaining to specified budget
-      db.query(sqlQuery, params)
-        .then((queryResult: any) => {
-          console.log(queryResult)
-
-
-        })
-        
-    //     .catch((err: any) => {
-    //       return next({
-    //         log: 'Express error in getLineItems middleware',
-    //         status: 400,
-    //         message: {
-    //           err: `budgetsController.getLineItems: ERROR: ${err}`,
-    //         },
-    //       });
-    //     });
-    });
+      try {
+        const queryResults = await db.query(sqlQuery, params);
+        queryResults.rows.forEach((lineItem:any) => {
+          const formattedLI:LineItem = {
+            lineItemID: lineItem.id,
+            description: lineItem.description,
+            category: lineItem.category,
+            expAmount: lineItem.expamount,
+            actAmount: lineItem.actamount,
+            isFixed: lineItem.isfixed,
+            isRecurring: lineItem.isrecurring,
+          }
+          budget.lineItems.push(formattedLI);
+        });
+      }
+      catch (err) {
+        return next({
+          log: 'Express error in getLineItems middleware',
+          status: 400,
+          message: {
+            err: `budgetsController.getLineItems: ERROR: ${err}`,
+          },
+        });
+      }
+    }
+    return next();
   },
 
   // middleware to create a new budget in the database
   createBudget: (req: Request, res: Response, next: NextFunction) => {
     const { userID, title, budget } = req.body;
     const params = [userID, title, budget];
-
     // define query to create new budget
     const sqlQuery = `
     INSERT INTO budgets (userID, title, budget)

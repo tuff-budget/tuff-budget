@@ -2,86 +2,30 @@ import React from 'react';
 import BudgetCardList from './BudgetCardList';
 import { useState, useEffect } from 'react';
 import axios from 'axios'; 
-import { BudgetArray, LineItem } from '../../types';
+import { BudgetArray, LineItem, LineItemArray, Budget } from '../../types';
 
 
 
 const MainContainer: React.FC = () => {
-  const hardLineItemsArray = [
-    {
-      lineItemID: 1,
-      description: 'My item',
-      category: 'awesomeCat',
-      expAmount: 20,
-      actAmount: 30,
-      isFixed: false,
-      isRecurring: false
-    },
-    {
-      lineItemID: 2,
-      description: 'your item',
-      category: 'awesomeDog',
-      expAmount: 210,
-      actAmount: 340,
-      isFixed: false,
-      isRecurring: true
-    }
-  ];
-  const hardLineItemsArray2 = [
-    {
-      lineItemID: 3,
-      description: 'i item',
-      category: 'sadCat',
-      expAmount: 20,
-      actAmount: 30,
-      isFixed: true,
-      isRecurring: true
-    },
-    {
-      lineItemID: 4,
-      description: 'this item',
-      category: 'foodcat',
-      expAmount: 10,
-      actAmount: 50,
-      isFixed: false,
-      isRecurring: true
-    }
-  ];
-  const hardItemBudget = [
-    {
-      title: 'Budget 1',
-      budgetID: 1,
-      userID: 1,
-      budget: 200,
-      lineItems: hardLineItemsArray
-    },
-    {
-      title: 'Budget 2',
-      budgetID: 2,
-      userID: 2,
-      budget: 10,
-      lineItems: hardLineItemsArray2
-    }
-]
 
-  const [ budgetArray, setBudgetArray ] = useState<BudgetArray>(hardItemBudget);
-  const [ userID, setuserID ] = useState(0)
+  const [ budgetArray, setBudgetArray ] = useState<BudgetArray>([]);
+  const [ userID, setuserID ] = useState(1)
   console.log(budgetArray);
   
-  // add budget functionalit
+  // add budget functionality
   const [ title, setTitle ] = useState('');
   const [ budget, setBudget ] = useState(0);
   
   //make initial fetch to the database for all user budgets.
   const budgetFetch = async () => {
-    const result = await axios.get('/budgets')
-    console.log(result.data);
+    const result = await axios.get(`http://localhost:3000/budgets/${userID}`)
+    //console.log('here is the result data ', result.data);
     setBudgetArray(result.data);
   }
   
   //on initial render, fetch the budgets from the database.
   useEffect(() => {
-    //budgetFetch();
+    budgetFetch();
     console.log('use effect fired off');
   }, [])
   
@@ -89,9 +33,9 @@ const MainContainer: React.FC = () => {
   
   // handles the deleting of a budget card
   function handleDeleteBudget(id: number) {
-    axios.delete(`/budgets/${id}`)
+    axios.delete(`http://localhost:3000/budgets/${id}`)
     .then(() => {
-      const updatedBudgetArray = [...budgetArray]
+      const updatedBudgetArray = JSON.parse(JSON.stringify([...budgetArray]));
       for(let i = 0; i < updatedBudgetArray.length; i++) {
         if (updatedBudgetArray[i].budgetID === id) {
           updatedBudgetArray.splice(i,1)
@@ -100,25 +44,32 @@ const MainContainer: React.FC = () => {
       setBudgetArray(updatedBudgetArray)
     })
   }
+
   // handles the creating of budget card 
   function createBudget (e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     //console.log(title, budget);
-    console.log('e', e)
-    axios.post('/budgets', {
+    //console.log('e', e)
+    //console.log('chris test createBudgetButton, Button was clicked')
+    axios.post('http://localhost:3000/budgets', {
+      userID: userID,
       title: title,
-      budget: budget,
-      userID: userID
+      budget: budget
     }).then(res => {
       const currentBudgetArray = JSON.parse(JSON.stringify(budgetArray));
-      currentBudgetArray.push(res.data)
+      const { budget, budgetID, title, userID} = res.data
+      const newBudget:Budget = {
+        budget, budgetID, title, lineItems: []
+      }
+
+      currentBudgetArray.push(newBudget)
       setBudgetArray(currentBudgetArray)
     })
   }
   // ------------------------------------- Line Item CRUD Functionality ------------------------------------------
-  // handles the deleting of a line itemg
+  // handles the deleting of a line item
   function handleDeleteLineItem(id: number, budgetID: number) {
-    axios.delete(`/lineItem/${id}`)
+    axios.delete(`http://localhost:3000/lineItems/${id}`)
     .then(() => {
       const newBudgetArray = JSON.parse(JSON.stringify(budgetArray));
       for (let budget of newBudgetArray){
@@ -136,28 +87,32 @@ const MainContainer: React.FC = () => {
   }
   
   function createLineItem (e: any, budgetID: number) {
-    console.log('this is e ', e);
-    console.log('this is e.target ', e.target);
-    console.log('this is at 0 ', e.target[0].value);
+    // console.log('this is e ', e);
+    // console.log('this is e.target ', e.target);
+    // console.log('this is at 0 ', e.target[0].value);
     e.preventDefault()
     
     const description = e.target[0].value;
     const category = e.target[1].value;
     const expAmount = parseInt(e.target[2].value);
     let actAmount = parseInt(e.target[3].value);
-    const isFixed = e.target[4].value;
-    const isRecurring = e.target[5].value;
+    const isFixed = false;
+    const isRecurring = false;
+    // const isFixed = e.target[4].value;
+    // const isRecurring = e.target[5].value;
     if (!actAmount) actAmount = -1;
-
+    //console.log('this is the budgetID ', budgetID)
     const newLineItem = { description, category, expAmount, actAmount, isFixed, isRecurring, budgetID }
-    axios.post('/lineItems', {newLineItem})
+
+    axios.post('http://localhost:3000/lineItems', newLineItem)
     .then(res => {
       console.log(res.data);
-      const lineItem = { description, category, expAmount, actAmount, isFixed, isRecurring, lineItemID: res.data };
+      if (actAmount === -1) actAmount = 0;
+      const lineItem:LineItem = { description, category, expAmount, actAmount, isFixed, isRecurring, lineItemID: res.data };
       const newBudgetArray = JSON.parse(JSON.stringify(budgetArray));
       for (let budget of newBudgetArray){
         if (budget.budgetID === budgetID){
-           newBudgetArray[budget].lineItems.push(lineItem)
+           budget.lineItems.push(lineItem)
           }
         }
       setBudgetArray(newBudgetArray)
@@ -188,8 +143,8 @@ const MainContainer: React.FC = () => {
       />
       <div className='create-budget-form'>
         <form onSubmit = {(e) => createBudget(e)}>
-          <input placeholder = 'name of project' onChange = {(e) => handleChange(e, 'title')}></input>
-          <input placeholder = 'budget' onChange = {(e) => handleChange(e, 'budget')}></input>
+          <input className = 'name-of-project' placeholder = 'name of project' onChange = {(e) => handleChange(e, 'title')}></input>
+          <input className = 'budget-amount'placeholder = 'budget' onChange = {(e) => handleChange(e, 'budget')}></input>
           <button>Add Budget</button>
         </form>
       </div>
