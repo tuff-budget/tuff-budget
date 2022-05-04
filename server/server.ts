@@ -10,19 +10,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
 // REQUIRE ROUTERS
-// const lineItemRouter = require('./routes/lineItems');
+const lineItemRouter = require('./routes/lineItems');
 const budgetsRouter = require('./routes/budgets');
 // const usersRouter = require('./routes/users');
 
 
 // CREATE ROUTES
-// app.use('/lineItems', lineItemRouter);
+app.use('/lineItems', lineItemRouter);
 app.use('/budgets', budgetsRouter);
 // app.use('/users', usersRouter);
 
 
 // CATCH-ALL ERROR HANDLER
-app.use((req: any, res: any) => res.status(404).send('You are in the wrong place! 😡'))
+app.use((req: Request, res: any) => res.status(404).send('You are in the wrong place! 😡'))
 
 
 // GLOBAL ERROR HANDLER

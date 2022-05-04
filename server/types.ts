@@ -13,3 +13,17 @@ export interface RequestHandler {
 export interface MiddlewareFunction {
     (req: Request, res: Response, next: NextFunction): void;
   }
+
+export interface LineItem {
+    lineItemID: number,
+    description: string,
+    category: string,
+    expAmount: number,
+    actAmount: number,
+    isFixed: boolean,
+    isRecurring: boolean
+}
+
+export interface Budget {
+    
+}

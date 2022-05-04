@@ -1,17 +1,15 @@
--- CREATE TABLE "line-items" (
--- 	ID serial NOT NULL UNIQUE,
--- 	budgetID integer NOT NULL,
--- 	description VARCHAR(255) NOT NULL,
--- 	category VARCHAR(255) NOT NULL,
--- 	expAmount FLOAT NOT NULL,
--- 	actAmount FLOAT NOT NULL,
--- 	isFixed BOOLEAN NOT NULL,
--- 	isRecurring BOOLEAN NOT NULL,
--- 	isActive BOOLEAN NOT NULL,
--- 	CONSTRAINT "line-items_pk" PRIMARY KEY ("ID")
--- ) WITH (
---   OIDS=FALSE
--- );
+CREATE TABLE lineitems (
+	ID SERIAL PRIMARY KEY,
+	budgetID integer NOT NULL,
+	description VARCHAR(255) NOT NULL,
+	category VARCHAR(255) NOT NULL,
+	expAmount FLOAT NOT NULL,
+	actAmount FLOAT NOT NULL,
+	isFixed BOOLEAN NOT NULL,
+	isRecurring BOOLEAN NOT NULL,
+	isActive BOOLEAN NOT NULL DEFAULT true,
+	FOREIGN KEY (budgetID) REFERENCES budgets (ID)
+);
 
 
 CREATE TABLE users (
@@ -29,6 +27,7 @@ CREATE TABLE budgets (
 	userID INTEGER NOT NULL,
 	title VARCHAR(255) NOT NULL,
 	budget INTEGER NOT NULL,
+	isActive BOOLEAN NOT NULL DEFAULT true,
 	FOREIGN KEY (userID) REFERENCES users(ID)
 );
 
