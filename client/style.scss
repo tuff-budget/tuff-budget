@@ -1,0 +1,50 @@
+// body {
+//   background-color: rgb(243, 240, 243);
+// }
+$primary-color: rgb(176, 255, 176);
+$secondary-color: rgb(201,255,231); 
+
+@mixin flexVertContainers {
+  display: flex;
+  flex-direction: column;
+  border: solid 2px black;
+}
+
+@mixin flexHorizContainers {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: solid 2px pink;
+}
+
+.budget-list-container {
+  @include flexVertContainers;
+  background: lighten($secondary-color, 5%);
+}
+
+.line-item {
+  @include flexHorizContainers;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+
+.budget-card{
+  @include flexVertContainers;
+}
+
+.line-item-container{
+  @include flexVertContainers;
+}
+
+.add-line-item-form{
+  @include flexHorizContainers;
+}
+
+.create-budget-form{
+  @include flexHorizContainers;
+}
+
+.budget-list-container{
+  @include flexVertContainers;
+}

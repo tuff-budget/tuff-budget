@@ -1,11 +1,10 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
 const buildPath = './build';
 
 module.exports = {
   mode: 'development',
-  entry: './client/index.js',
+  entry: './client/index.tsx',
   output: {
     path: path.resolve(__dirname, buildPath),
     filename: 'bundle.js',
@@ -46,10 +45,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './client/index.html',
       filename: './index.html',
-    }),
-    new CopyPlugin({
-      patterns: [{ from: './client/style.scss' }],
-    }),
+    })
   ],
   devServer: {
     static: {
@@ -59,9 +55,8 @@ module.exports = {
     compress: true,
     port: 8080, 
     proxy: [
-      {
-        context: ['/user', '/reminder'],
-        target: 'http://localhost:3000',
+    {
+        '/**': 'http://localhost:3000',
       },
     ]
   }  ,

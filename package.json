@@ -21,6 +21,8 @@
   "homepage": "https://github.com/jigglytuff/tuff-budget#readme",
   "dependencies": {
     "pg": "^8.7.3",
+    "@types/react-router-dom": "^5.3.3",
+    "axios": "^0.27.2",
     "react": "^18.1.0",
     "react-dom": "^18.1.0"
   },
@@ -29,6 +31,10 @@
     "@babel/preset-env": "^7.17.10",
     "@babel/preset-react": "^7.16.7",
     "@types/node": "^17.0.31",
+    "@types/express": "^4.17.13",
+    "@types/node": "^17.0.31",
+    "@types/react": "^18.0.8",
+    "@types/react-dom": "^18.0.3",
     "babel-loader": "^8.2.5",
     "concurrently": "^7.1.0",
     "copy-webpack-plugin": "^10.2.4",
