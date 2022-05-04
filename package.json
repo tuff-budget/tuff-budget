@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "dev": "nodemon ./server/server.ts --watch --open",
-    "start": "webpack serve"
+    "start": "webpack serve --open"
   },
   "repository": {
     "type": "git",
@@ -20,9 +20,9 @@
   },
   "homepage": "https://github.com/jigglytuff/tuff-budget#readme",
   "dependencies": {
-    "pg": "^8.7.3",
     "@types/react-router-dom": "^5.3.3",
     "axios": "^0.27.2",
+    "pg": "^8.7.3",
     "react": "^18.1.0",
     "react-dom": "^18.1.0"
   },
@@ -30,7 +30,6 @@
     "@babel/core": "^7.17.10",
     "@babel/preset-env": "^7.17.10",
     "@babel/preset-react": "^7.16.7",
-    "@types/node": "^17.0.31",
     "@types/express": "^4.17.13",
     "@types/node": "^17.0.31",
     "@types/react": "^18.0.8",
@@ -38,6 +37,7 @@
     "babel-loader": "^8.2.5",
     "concurrently": "^7.1.0",
     "copy-webpack-plugin": "^10.2.4",
+    "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "css-loader": "^6.7.1",
     "eslint": "^8.14.0",

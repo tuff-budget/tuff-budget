@@ -33,15 +33,15 @@ $third-color: rgb(23, 110, 79);
 }
 
 .heading{
-  color: $third-color; 
+  color: $third-color;
   display: flex; 
   flex-direction: row;
-  justify-content: center; 
+  justify-content: center;
 }
 
 .budget-list-container {
   @include flexVertContainers;
-  background: white;
+  
 }
 
 .line-item {
@@ -57,7 +57,7 @@ $third-color: rgb(23, 110, 79);
 
     button{
       @include border-radius(5px);
-      background-color: $secondary-color;
+      background-color: lighten($primary-color, 18%);
       padding: 2px 8px 2px 8px;
     }
   }
@@ -70,23 +70,38 @@ $third-color: rgb(23, 110, 79);
   border: solid 2px rgb(21, 57, 18);
   background: lighten($secondary-color, 5%);
   min-height: 500px;
+
+    .total-remaining {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      
+      h4 {
+        margin: 40px 5px 0px 40px;
+      }
+    }  
 }
+
 
 .line-item-container{
   @include flexVertContainers;
   @include border-radius(5px);
+  // background-color: red;
   .line-item-header {
     position: relative;
     top: 0;
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    
+    margin-bottom: 15px;
   }
 }
 
 .add-line-item-form{
-  float: bottom;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  align-items: end;
+  min-height: 100px;  
     form {
       @include flexHorizContainers;
       @include border-radius(5px);
@@ -103,10 +118,21 @@ $third-color: rgb(23, 110, 79);
 
 .create-budget-form{
   @include flexHorizContainers;
-  // @include border-radius(5px);
+  @include border-radius(5px);
   margin-top: 15px; 
-  justify-content: center; 
-  
+  justify-content: flex-end; 
+  form {
+    @include flexHorizContainers;
+    @include border-radius(5px);
+    justify-content: flex-end;
+    align-items: center;
+    input {
+      @include border-radius(5px);
+      border: solid 1px $third-color;
+      margin-right: 10px;
+      padding: 5px;
+    }
+  }
 }
 
 .budget-list-container{
@@ -115,7 +141,7 @@ $third-color: rgb(23, 110, 79);
 }
 
 h2{
-  color: rgb(23, 110, 79); 
+  color: rgb(8, 57, 39); 
 }
 
 h4{
@@ -129,6 +155,7 @@ h4{
   border-radius: 12px; 
   margin-top: 9px;
   margin-right: 9px;
+ 
 }
 
 // .name-of-project{

@@ -74,9 +74,11 @@ const MainContainer: React.FC = () => {
       const newBudgetArray = JSON.parse(JSON.stringify(budgetArray));
       for (let budget of newBudgetArray){
         if (budget.budgetID === budgetID){
-          for (let lineItem of budget.lineItems){
-            if (lineItem.lineItemID === id){
-              delete newBudgetArray[budget][lineItem];
+          console.log('budgetID is found ', budget.budgetID, budget.lineItems)
+          for (let i = 0; i < budget.lineItems.length; i++){
+            if (budget.lineItems[i].lineItemID === id){
+              console.log('lineItemFound ')
+              delete budget.lineItems[i];
               break;
             }
           }
@@ -87,9 +89,6 @@ const MainContainer: React.FC = () => {
   }
   
   function createLineItem (e: any, budgetID: number) {
-    // console.log('this is e ', e);
-    // console.log('this is e.target ', e.target);
-    // console.log('this is at 0 ', e.target[0].value);
     e.preventDefault()
     
     const description = e.target[0].value;
