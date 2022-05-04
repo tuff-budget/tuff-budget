@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "jsx": "react",
+    "noImplicitAny": true,
+    "esModuleInterop": true
+  },
+
+  "include": ["server/**/*", "client/**/*"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
+}
