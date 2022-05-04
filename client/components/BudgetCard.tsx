@@ -56,7 +56,6 @@ return (
     <div className = 'delete-budget-button'>
       <button onClick = {(e) => handleDeleteBudget(budgetID)}>X</button>
     </div>
-
     {/* BUDGET META DATA */}
     <div className='budget-meta-data'>
       <h2>{title}</h2>
@@ -78,16 +77,19 @@ return (
     {/* LINE ITEM DATA */}
     <div className='line-item-container'>
       <div className='line-item-header'>
-        <div>Description: </div>
-        <div>Category: </div>
-        <div>Expected Amount: </div>
-        <div>Spent: </div>
-        <div>Is Fixed? </div>
-        <div>Is Recurring?</div>
+        <div><b>Description:</b></div>
+        <div><b>Category:</b></div>
+        <div><b>Expected Amount:</b></div>
+        <div><b>Spent:</b></div>
+        <div><b>Is Fixed?</b></div>
+        <div><b>Is Recurring?</b></div>
       </div>
       {lineItemArray}
     </div>
-
+    <div className='total-remaining'>
+      <h4>Current Total (Expected): {'$'.concat(budget.toLocaleString())}</h4>
+      <h4>Remaining Budget (Expected): {'$'.concat((budget - budget).toLocaleString())}</h4>
+    </div>
     {/* ADD LINE ITEM FORM */}
     <div className='add-line-item-form'>
       <form onSubmit = {(e) => createLineItem(e, budgetID)}>
@@ -96,8 +98,8 @@ return (
         <input placeholder = 'expected amount'></input>
         <input placeholder = 'actual amount'></input>
         {/* add check boxes for recocurring and fixed */}
-        Is Fixed?: <input type='checkbox' name='Fixed'></input>
-        Is Recurring?: <input type='checkbox' name='Recurring'></input>
+        Fixed?: <input type='checkbox' name='Fixed'></input>
+        Recurring?: <input type='checkbox' name='Recurring'></input>
         <button>Submit</button>
       </form>
     </div>
