@@ -111,7 +111,7 @@ const MainContainer: React.FC = () => {
 
     axios.post('http://localhost:3000/lineItems', newLineItem)
     .then(res => {
-      console.log(res.data);
+      //console.log(res.data);
       if (actAmount === -1) actAmount = 0;
       const lineItem:LineItem = { description, category, expAmount, actAmount, isFixed, isRecurring, lineItemID: res.data };
       const newBudgetArray = JSON.parse(JSON.stringify(budgetArray));
