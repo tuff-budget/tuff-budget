@@ -44,6 +44,22 @@ $third-color: rgb(23, 110, 79);
   
 }
 
+.budget-title-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  button {
+    @include border-radius(5px);
+    background-color: rgb(59, 151, 59); 
+    color: white;
+    margin-top: 9px;
+    margin-right: 9px;
+    height: 30px;
+    border: solid 2px rgb(59, 151, 59)
+  }
+}
+
 .line-item {
   @include flexHorizContainers;
   @include border-radius(5px);
@@ -69,17 +85,26 @@ $third-color: rgb(23, 110, 79);
   margin-top: 10px;
   border: solid 2px rgb(21, 57, 18);
   background: lighten($secondary-color, 5%);
-  min-height: 500px;
+  // min-height: 500px;
 
     .total-remaining {
       display: flex;
-      flex-direction: row;
-      justify-content: flex-end;
+      flex-direction: column;
+      align-items: flex-end;
       
-      h4 {
-        margin: 40px 5px 0px 40px;
+
+      .total-row {
+        display: flex;
+        flex-direction: row;
+        p {
+          margin-left: 20px;
+          margin-right: 20px;
+          margin-top: 5px;
+          margin-bottom: 5px;
+        }
       }
-    }  
+    } 
+    
 }
 
 
@@ -101,7 +126,7 @@ $third-color: rgb(23, 110, 79);
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   align-items: end;
-  min-height: 100px;  
+  min-height: 60px;
     form {
       @include flexHorizContainers;
       @include border-radius(5px);
@@ -112,6 +137,13 @@ $third-color: rgb(23, 110, 79);
         border: solid 1px $third-color;
         margin-right: 10px;
         padding: 5px;
+      } 
+      button{
+        @include border-radius(5px);
+        background-color: rgb(234, 245, 234); 
+        color: black;
+        border: solid 2px rgb(59, 151, 59);
+        padding: 3px 6px 3px 6px;
       }
     }
 }
@@ -132,6 +164,13 @@ $third-color: rgb(23, 110, 79);
       margin-right: 10px;
       padding: 5px;
     }
+    button {
+      @include border-radius(5px);
+      background-color: rgb(59, 151, 59); 
+      color: white;
+      border: solid 2px rgb(59, 151, 59);
+      padding: 3px 6px 3px 6px;
+    }
   }
 }
 
@@ -140,32 +179,22 @@ $third-color: rgb(23, 110, 79);
   @include border-radius(5px);
 }
 
-h2{
-  color: rgb(8, 57, 39); 
+h1{
+  color: rgb(3, 63, 3); 
 }
 
 h4{
   color: darken(rgb(46, 121, 95), 10%); 
 }
 
-.delete-budget-button{
-  display: flex; 
-  flex-direction: row;
-  justify-content: end; 
-  border-radius: 12px; 
-  margin-top: 9px;
-  margin-right: 9px;
- 
-}
-
-.budget-meta-totals{
-  display: flex; 
-  flex-direction: row;
-  justify-content: start;
-  > * {
-    padding-right: 100px;
-  }
-}
+// .delete-budget-button{
+//   display: flex; 
+//   flex-direction: row;
+//   justify-content: end; 
+//   border-radius: 12px; 
+//   margin-top: 9px;
+//   margin-right: 9px;
+// }
 
 // .name-of-project{
 //   // display: flex; 

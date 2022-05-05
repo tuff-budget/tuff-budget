@@ -53,25 +53,19 @@ const actualTotal = getActualTotal();
 return (
   <div className='budget-card'>
     {/* DELETE BUDGET FORM */}
-    <div className = 'delete-budget-button'>
-      <button onClick = {(e) => handleDeleteBudget(budgetID)}>X</button>
-    </div>
+    
     {/* BUDGET META DATA */}
     <div className='budget-meta-data'>
-      <h2>{title}</h2>
-      <h4>Budget: {'$'.concat(budget.toLocaleString())}</h4>
-      <div className='budget-meta-totals'>
-        <div className='budget-meta-expected'>
-          <p>Expected:</p>
-          <p>Current Total: {'$'.concat(expectedTotal.toLocaleString())}</p>
-          <p>Remaining Budget: {'$'.concat((budget - expectedTotal).toLocaleString())}</p>
-        </div>
-        <div className='budget-meta-actual'>
-          <p>Actual:</p>
-          <p>Current Total (Actual): {'$'.concat(actualTotal.toLocaleString())}</p>
-          <p>Remaining Budget (Actual): {'$'.concat((budget - actualTotal).toLocaleString())}</p>
-        </div>
+      <div className='budget-title-button'>
+        <h1>{title}</h1>
+        <button 
+          className = 'delete-budget-button'
+          onClick = {(e) => handleDeleteBudget(budgetID)}
+        >
+          Delete Budget
+        </button>
       </div>
+      <h4><b>Budget: {'$'.concat(budget.toLocaleString())}</b></h4>
     </div>
 
     {/* LINE ITEM DATA */}
@@ -80,16 +74,27 @@ return (
         <div><b>Description:</b></div>
         <div><b>Category:</b></div>
         <div><b>Expected Amount:</b></div>
-        <div><b>Spent:</b></div>
+        <div><b>Actual Spent:</b></div>
         <div><b>Is Fixed?</b></div>
         <div><b>Is Recurring?</b></div>
       </div>
       {lineItemArray}
     </div>
+
+    {/* BUDGET VS EXPECTED/SPENT DATA */}
     <div className='total-remaining'>
-      <h4>Current Total (Expected): {'$'.concat(budget.toLocaleString())}</h4>
-      <h4>Remaining Budget (Expected): {'$'.concat((budget - budget).toLocaleString())}</h4>
+      <div className='total-row'>
+        <p><strong>Expected:</strong></p>
+        <p>Current: {'$'.concat(expectedTotal.toLocaleString())}</p>
+        <p>Remaining: {'$'.concat((budget - expectedTotal).toLocaleString())}</p>
+      </div>
+      <div className='total-row'>
+        <p><strong>Actual:</strong></p>
+        <p>Current: {'$'.concat(actualTotal.toLocaleString())}</p>
+        <p>Remaining: {'$'.concat((budget - actualTotal).toLocaleString())}</p>
+      </div>
     </div>
+
     {/* ADD LINE ITEM FORM */}
     <div className='add-line-item-form'>
       <form onSubmit = {(e) => createLineItem(e, budgetID)}>

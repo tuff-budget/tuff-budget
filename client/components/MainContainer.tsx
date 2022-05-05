@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {Suspense} from 'react';
+// const BudgetCardList = React.lazy (() => import ('./BudgetCardList'));
 import BudgetCardList from './BudgetCardList';
 import { useState, useEffect } from 'react';
 import axios from 'axios'; 
@@ -10,7 +11,6 @@ const MainContainer: React.FC = () => {
 
   const [ budgetArray, setBudgetArray ] = useState<BudgetArray>([]);
   const [ userID, setuserID ] = useState(1)
-  console.log(budgetArray);
   
   // add budget functionality
   const [ title, setTitle ] = useState('');
@@ -19,7 +19,6 @@ const MainContainer: React.FC = () => {
   //make initial fetch to the database for all user budgets.
   const budgetFetch = async () => {
     const result = await axios.get(`http://localhost:3000/budgets/${userID}`)
-    //console.log('here is the result data ', result.data);
     setBudgetArray(result.data);
   }
   
@@ -35,7 +34,7 @@ const MainContainer: React.FC = () => {
   function handleDeleteBudget(id: number) {
     axios.delete(`http://localhost:3000/budgets/${id}`)
     .then(() => {
-      const updatedBudgetArray = JSON.parse(JSON.stringify([...budgetArray]));
+      const updatedBudgetArray = JSON.parse(JSON.stringify(budgetArray));
       for(let i = 0; i < updatedBudgetArray.length; i++) {
         if (updatedBudgetArray[i].budgetID === id) {
           updatedBudgetArray.splice(i,1)
@@ -46,11 +45,11 @@ const MainContainer: React.FC = () => {
   }
 
   // handles the creating of budget card 
-  function createBudget (e: React.FormEvent<HTMLFormElement>) {
+  function createBudget (e:any) {
     e.preventDefault()
-    //console.log(title, budget);
-    //console.log('e', e)
-    //console.log('chris test createBudgetButton, Button was clicked')
+    e.target[0].value = '';
+    e.target[1].value = '';
+
     axios.post('http://localhost:3000/budgets', {
       userID: userID,
       title: title,
@@ -62,8 +61,10 @@ const MainContainer: React.FC = () => {
         budget, budgetID, title, lineItems: []
       }
 
-      currentBudgetArray.push(newBudget)
-      setBudgetArray(currentBudgetArray)
+      currentBudgetArray.push(newBudget);
+      setBudgetArray(currentBudgetArray);
+      setTitle('');
+      setBudget(0);
     })
   }
   // ------------------------------------- Line Item CRUD Functionality ------------------------------------------
@@ -74,7 +75,6 @@ const MainContainer: React.FC = () => {
       const newBudgetArray = JSON.parse(JSON.stringify(budgetArray));
       for (let budget of newBudgetArray){
         if (budget.budgetID === budgetID){
-          console.log('budgetID is found ', budget.budgetID, budget.lineItems)
           for (let i = 0; i < budget.lineItems.length; i++){
             if (budget.lineItems[i].lineItemID === id){
               console.log('lineItemFound ')
@@ -95,17 +95,23 @@ const MainContainer: React.FC = () => {
     const category = e.target[1].value;
     const expAmount = parseInt(e.target[2].value);
     let actAmount = parseInt(e.target[3].value);
-    const isFixed = false;
-    const isRecurring = false;
-    // const isFixed = e.target[4].value;
-    // const isRecurring = e.target[5].value;
+    const isFixed = e.target[4].checked;
+    const isRecurring = e.target[5].checked;
+    
+    e.target[0].value = '';
+    e.target[1].value = '';
+    e.target[2].value = '';
+    e.target[3].value = '';
+    e.target[4].checked = false;
+    e.target[5].checked = false;
+    
     if (!actAmount) actAmount = -1;
     //console.log('this is the budgetID ', budgetID)
     const newLineItem = { description, category, expAmount, actAmount, isFixed, isRecurring, budgetID }
 
     axios.post('http://localhost:3000/lineItems', newLineItem)
     .then(res => {
-      console.log(res.data);
+      //console.log(res.data);
       if (actAmount === -1) actAmount = 0;
       const lineItem:LineItem = { description, category, expAmount, actAmount, isFixed, isRecurring, lineItemID: res.data };
       const newBudgetArray = JSON.parse(JSON.stringify(budgetArray));
@@ -131,6 +137,7 @@ const MainContainer: React.FC = () => {
   
   return (
     <div>
+      {/* <Suspense fallback={<div>Loading...</div>}> */}
       <BudgetCardList
       budgetArray={budgetArray}
       handleDeleteBudget={handleDeleteBudget}
@@ -147,6 +154,7 @@ const MainContainer: React.FC = () => {
           <button>Add Budget</button>
         </form>
       </div>
+      {/* </Suspense> */}
     </div>
   )
 }
